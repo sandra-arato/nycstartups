@@ -4,11 +4,11 @@ var getKeywords = function (urlInput, current) {
 	$.ajax({		//make this call syncronous by setting async:false
 	    url: urlInput,
 	    type: 'GET',
-	    success: function(res) { //might need an error as well... remove from list?
+	    async: false,
+	    success: function(res) { //might need an error as well... remove from list? + check for undefined
 	        var metaKeywords = $(res.responseText).siblings("meta[name='Keywords']").attr("content");
 	        var tags = $("<span />")
-			.html(this.text);
-			// .css("color", "red");
+			.html("<p>"+metaKeywords+"</p>");
 			$(company).append(tags);
 			//get description as well at the same time, maybe store keywords in an array?
 	    }
@@ -32,6 +32,7 @@ var listLinks = function () {
 						var currentUrl = $(this).attr("href");
 						
 						getKeywords(currentUrl, company);
+						
 						$("ul").append(company);
 						$(company).css("visibility", "visible");
 					};
